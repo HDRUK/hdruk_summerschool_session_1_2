@@ -8,7 +8,7 @@ USER root
 RUN apt-get -y install sudo
 
 # # # Add user hdruk with no password, add to sudo group
-RUN adduser --disabled-password --gecos '' hdruk
+RUN adduser --home /home/hdruk --disabled-password --gecos '' hdruk
 RUN adduser hdruk sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
@@ -24,8 +24,12 @@ RUN pip install sklearn numpy pandas seaborn
 USER hdruk
 WORKDIR /home/hdruk/
 RUN chmod a+rwx /home/hdruk/
-RUN export HOME=/home/hdruk/
-RUN echo `pwd`
+RUN sudo usermod -m -d /home/hdruk hdruk
+#RUN setenv HOME /home/hdruk
+RUN echo "export HOME=/home/hdruk/" >> /home/hdruk/.bashrc
+ENV HOME=/home/hdruk/
+
+RUN echo `env` | grep HOME
 
 
 # RUN sudo su && apt-get update && apt-get install -y --no-install-recommends apt-utils
