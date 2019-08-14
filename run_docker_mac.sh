@@ -4,7 +4,7 @@ xhost +
 
 IMAGE='altermeister/hdruk_summerschool_session_1_2'
 NAME='hdruk_s12'
-FOLDER='/Users/karwath/bearshare.bham/teaching/2019/summerSchool/docker/chiara/HDRUK_omics/data'
+FOLDER='/Users/<user_name>/data'
 
 # This command will start the container on background mode
 CMD="docker run \
