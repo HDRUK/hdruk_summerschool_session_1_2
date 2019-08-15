@@ -32,7 +32,7 @@ def plot_histograms(df_org,graph_per_row=3,max_unique=50):
 
 def df_one_hot(df_org_train,df_org_test,categorical_columns=[]):
 
-    @ make a copy of the dataframes
+    # make a copy of the dataframes
     df_train_cp = df_org_train.copy()
     df_test_cp = df_org_test.copy()
 
