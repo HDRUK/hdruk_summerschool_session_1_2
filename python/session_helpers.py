@@ -1,5 +1,5 @@
 from mpl_toolkits.mplot3d import Axes3D
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 import matplotlib.pyplot as plt # plotting
 import numpy as np # linear algebra
 import os # accessing directory structure
@@ -30,8 +30,35 @@ def plot_histograms(df_org,graph_per_row=3,max_unique=50):
         axis.set_title(column_name)
 
 
-def df_one_hot(df_org,categorical_columns=[]):
-    sklearn.preprocessing.OneHotEncoder
+def df_one_hot(df_org_train,df_org_test,categorical_columns=[]):
+
+    @ make a copy of the dataframes
+    df_train_cp = df_org_train.copy()
+    df_test_cp = df_org_test.copy()
+
+    # remember for later (potentially removing additional colummns
+    train_cols =  set(df_train_cp.columns.values)
+    test_cols  =  set(df_test_cp.columns.values)
+    
+    df_train_cp['split'] = 'train'
+    df_test_cp['split']  = 'test'
+    
+    df_all_cp    = df_train_cp.append(df_test_cp,sort=False)
+    df_all_cp    = pd.get_dummies(df_all_cp,prefix_sep='__',columns=categorical_columns)
+
+    df_new_train = df_all_cp[df_all_cp['split']=='train']
+    df_new_test  = df_all_cp[df_all_cp['split']=='test']
+
+    # remove additional columns
+    df_new_train = df_new_train.drop(['split']+list(test_cols-train_cols),axis=1)
+    df_new_test  = df_new_test.drop(['split']+list(train_cols-test_cols),axis=1)
+
+    return df_new_train,df_new_test
+
+
+    
+
+
         
 # Distribution graphs (histogram/bar graph) of column data
 def plotPerColumnDistribution(df_org, nGraphShown, nGraphPerRow):
