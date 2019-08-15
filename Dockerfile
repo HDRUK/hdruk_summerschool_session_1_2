@@ -24,14 +24,15 @@ RUN pip install sklearn numpy pandas seaborn
 USER hdruk
 WORKDIR /home/hdruk/
 RUN chmod a+rwx /home/hdruk/
-RUN sudo usermod -m -d /home/hdruk hdruk
+#RUN sudo usermod -m -d /home/hdruk hdruk
 #RUN setenv HOME /home/hdruk
 RUN echo "export HOME=/home/hdruk/" >> /home/hdruk/.bashrc
 ENV HOME=/home/hdruk/
 
 RUN echo `env` | grep HOME
 
-
+RUN git clone https://github.com/athro/hdruk_summerschool_session_1_2.git
+RUN cp -r /home/hdruk/hdruk_summerschool_session_1_2/python /home/hdruk/
 # RUN sudo su && apt-get update && apt-get install -y --no-install-recommends apt-utils
 # RUN sudo su && apt-get install -y emacs
 #RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
