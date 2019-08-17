@@ -5,6 +5,32 @@ import numpy as np # linear algebra
 import os # accessing directory structure
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import seaborn as sns
+from graphviz import Source
+from IPython.display import SVG,display
+from sklearn.tree import export_graphviz
+
+
+
+def plot_tree(tree_classifier,data_X,data_y,max_depth=None,proportion=False, rotate=False):
+    dtree_graph = Source(export_graphviz(tree_classifier,
+                                             out_file=None, 
+                                             feature_names = [str(x) for x in list(data_X.columns.values)],
+                                             class_names = [str(x) for x in list(data_y.unique())],
+                                             rounded = True,
+                                             proportion = proportion, 
+                                             precision = 2,
+                                             filled = True,
+                                             max_depth=max_depth,
+                                             rotate=rotate))
+
+    return dtree_graph.pipe(format='png')
+    return display(SVG(dtree_graph.pipe(format='svg')))
+
+
+    
+
+
+
 
 
 def plot_histograms(df_org,graph_per_row=3,max_unique=50):
@@ -22,7 +48,7 @@ def plot_histograms(df_org,graph_per_row=3,max_unique=50):
     for column_name,axis in zip(column_names_to_plot,axes):
         # numerical columns
         if column_name in df_num.columns:
-            sns.distplot(df_org[column_name][df_org[column_name].notna()],ax=axis,hist=True)
+            sns.distplot(df_org[column_name].dropna(),ax=axis,hist=True)
         # non-numerical
         else:
             df_dummy = df_org[column_name].value_counts()/len(df_org[column_name])

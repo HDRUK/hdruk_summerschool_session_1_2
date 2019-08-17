@@ -16,7 +16,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN apt-get install -y python3
 RUN wget https://bootstrap.pypa.io/get-pip.py && sudo python3.6 get-pip.py
 RUN pip install jupyter
-RUN pip install sklearn numpy pandas seaborn
+RUN pip install sklearn numpy pandas seaborn graphviz imblearn
 
 
 
