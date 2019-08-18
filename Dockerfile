@@ -33,6 +33,8 @@ RUN echo `env` | grep HOME
 
 RUN git clone https://github.com/athro/hdruk_summerschool_session_1_2.git
 RUN cp -r /home/hdruk/hdruk_summerschool_session_1_2/python /home/hdruk/
+RUN cd /home/hdruk/python/ && wget "https://drive.google.com/uc?export=download&id=1q5L74_joy4LXyMiNZbUA6IdYnfgEoFTp" -O session1_data.tgz && tar xvfz session1_data.tgz
+
 # RUN sudo su && apt-get update && apt-get install -y --no-install-recommends apt-utils
 # RUN sudo su && apt-get install -y emacs
 #RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
